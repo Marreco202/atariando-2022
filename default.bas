@@ -92,6 +92,7 @@ end
 
  score = 00000 :  scorecolor = $0E
  m = 0
+ n = 0
 
  rem loop principal 
 
@@ -107,7 +108,7 @@ main
 
  rem jogador 1
 
- if f = 10 then player0:
+ if f = 10 && n = 0 then player0:
         %00100100
         %00100100
         %00011000
@@ -117,7 +118,7 @@ main
         %00010000
         %00011000
 end
- if f = 10 then player0color:
+ if f = 10 || n = 0 then player0color:
     $0E;
     $0E;
     $0E;
@@ -127,7 +128,7 @@ end
     $0E;
     $0E;
 end
- if f = 20 then player0:
+ if f = 20 || n = 0 then player0:
         %01000010
         %00100100
         %00011000
@@ -137,7 +138,7 @@ end
         %00010000
         %00011000
 end
- if f = 20 then player0color:
+ if f = 20 || n = 0 then player0color:
     $0E;
     $0E;
     $0E;
@@ -146,11 +147,114 @@ end
     $0E;
     $0E;
     $0E;
+end
+
+  if f = 10 || o = 1 then player0:
+        %00100100
+        %00100100
+        %00011001
+        %00011010
+        %00111100
+        %01011000
+        %00010000
+        %00011000
+end
+   if f = 10 || o = 1 then player0color:
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+end
+  if f = 20  || o = 1  then player0:
+        %01000010
+        %00100101
+        %00011000
+        %00011010
+        %01111100
+        %00011000
+        %00010000
+        %00011000
+end
+   if f = 20 || o = 1 then player0color:
+    
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+end
+  if f = 30 || o = 1 then player0:
+        %00100101
+        %00100100
+        %00011000
+        %01011010
+        %00111100
+        %00011000
+        %00010000
+        %00011000
+end
+   if f = 30 || o = 1 then player0color:
+
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+end
+  if f = 40 || o = 1 then player0:
+        %01000010
+        %00100101
+        %00011000
+        %00011010
+        %01111100
+        %00011000
+        %00010000
+        %00011000
+end
+   if f = 40 || o = 1 then player0color:
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+end
+  if f = 50 || o = 1 then player0:
+        %00100100
+        %00100100
+        %00011001
+        %00011010
+        %00111100
+        %01011000
+        %00010000
+        %00011000
+end
+   if f = 50 || o = 1 then player0color:
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
 end
 
  rem jogador 2
 
- if g = 10 then player1:
+ if g = 10 || o = 0 then player1:
         %00100100
         %00100100
         %00011000
@@ -160,18 +264,18 @@ end
         %00010000
         %00011000
 end
- if g = 10 then player1color:
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
+ if g = 10 || o = 0 then player1color:
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
     
 end
- if g = 20 then player1:
+ if g = 20 || o = 0 then player1:
         %01000010
         %00100100
         %00011000
@@ -181,19 +285,19 @@ end
         %00010000
         %00011000
 end
- if g = 20 then player1color:
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
-    $40;
+ if g = 20 || o = 0 then player1color:
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
+    $34;
 end
 
 
- if f=20 then f=0
+ if f=50 then f=0
  if g=20 then g=0
 
  rem velocidade que o vilao ataca o heroi 
@@ -225,7 +329,7 @@ draw
 
  rem se o tiro acertar o vilao somar pontos ordem crescente surgir outro vilao na tela e som de vilao abatido 
 
- if collision(ball,player0) then score=score+1:player1x=rand/2:player1y=0:missile0y=255 : goto pointsound
+ ; if collision(ball,player0) then score=score+1:player1x=rand/2:player1y=0:missile0y=255 : goto pointsound
 
  rem se o vilao encostar no heroi som de explosao retorna para o titulo 
 
@@ -255,6 +359,8 @@ draw
  if joy1left  && !collision(player1,playfield) then player1x = player1x - 1 :  REFP1 = 8 : n = 2 : goto skipmove
  if joy1down  && !collision(player1,playfield) then player1y = player1y + 1  : n = 3 : goto skipmove
  if joy1right  && !collision(player1,playfield) then player1x = player1x + 1 :  n = 4 : REFP1 = 0 : goto skipmove
+
+ if collision(ball,player0) then score=score+1 : o = 1 : n = 1: goto pointsound
 
 skipmove
  if player0x < player1x then REFP1 = 8
