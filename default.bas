@@ -16,19 +16,18 @@
  rem titulo 
 
 title 
-
  playfield:
+ ..XXXX.X.X.XXX.XX.XXX..XXX.X....
+ ..X....X.X..X..X..X.X..X.X.X....
+ ..XXX..X.X..X..XX.XXXX.X.X.X....
+ ..X....X.X..X..X..X..X.X.X.X....
+ ..X....XXX..X..XX.XXXX.XXX.XXX..
  ................................
- ................................
- ................................
- ..X....X.........XX....X...X....
- .XXX..XXX.......XXX....X..XX....
- XX..XX..XX.....XX.X....X.XX.....
- XX......XX....XX..X....XXX......
- XX......XX....XXXXXXX..XXX......
- XXX....XXX.XX....XXX...X.XX.....
- .XX....XX..XX....XX....X..XX....
- ..X....X..........X....X...X....
+ .....XXX..XXX.XXX.XXX..XXX......
+ .....X.X..X.X.X.X.X.X..X.X......
+ .....XXXX.XX..XXX.XXXX.X.X......
+ .....XX.X.X.X.X.X.X..X.X.X......
+ .....XXXX.X.X.X.X.XXXX.XXX......
 end
 
  rem cor do titulo e fundo da tela 
@@ -70,19 +69,17 @@ skiptitle
  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 end
 
-startposx
- player1x = rand
- if player1x > 150 then goto startposx
-startposy
- player1y = rand
- if player1y > 100 then goto startposy
 
  rem posicao dos personagens na tela 
 
  player0x = 20 : player0y = 47
  player1x = 130 : player1y = 47 
+ ballx = ((rand & 50) + 50) : bally = ((rand & 40) + 30) 
+ if ballx < 50 || ballx > 100 then goto skiptitle
+ if bally < 50 || bally > 100 then goto skiptitle
+ ballheight = 3 : CTRLPF = $21
 
- rem configura?o do missil saindo do heroi 
+ rem configuracao do missil saindo do heroi 
 
  ; missile0height = 4  : missile0y = 255
 
@@ -108,34 +105,96 @@ main
  f=f+1
  g=g+1
 
- rem heroi 
+ rem jogador 1
 
- if f=10 then player0:
- %01111100
- %00111000
- %00010000
- %00010000
- %00000000
- %00000000
- %00000000
- %00000000
+ if f = 10 then player0:
+        %00100100
+        %00100100
+        %00011000
+        %00011010
+        %00111100
+        %01011000
+        %00010000
+        %00011000
+end
+ if f = 10 then player0color:
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+end
+ if f = 20 then player0:
+        %01000010
+        %00100100
+        %00011000
+        %01011000
+        %00111100
+        %00011010
+        %00010000
+        %00011000
+end
+ if f = 20 then player0color:
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
+    $0E;
 end
 
- rem vilao 
+ rem jogador 2
 
- if g=10 then player1:
- %10000001
- %10011001
- %10111101
- %11100111
- %10111101
- %10011001
- %10000001
- %00000000
+ if g = 10 then player1:
+        %00100100
+        %00100100
+        %00011000
+        %00011010
+        %00111100
+        %01011000
+        %00010000
+        %00011000
+end
+ if g = 10 then player1color:
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    
+end
+ if g = 20 then player1:
+        %01000010
+        %00100100
+        %00011000
+        %01011000
+        %00111100
+        %00011010
+        %00010000
+        %00011000
+end
+ if g = 20 then player1color:
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
+    $40;
 end
 
- if f=10 then f=0
- if g=10 then g=0
+
+ if f=20 then f=0
+ if g=20 then g=0
 
  rem velocidade que o vilao ataca o heroi 
 
@@ -154,23 +213,23 @@ end
  rem verificando se o tiro saiu do heroi 
 
 checkfire
- if missile0y>240 then goto skip
- missile0y = missile0y - 2 : goto draw
+ ; if missile0y>240 then goto skip
+ ; missile0y = missile0y - 2 : goto draw
 
 skip
  rem tiro emitido inicia o jogo e sons de fundo e disparo  
- if joy0fire then missile0y=player0y-2:missile0x=player0x+4: goto firesound
+ ; if joy0fire then missile0y=player0y-2:missile0x=player0x+4: goto firesound
 
 draw
  drawscreen
 
  rem se o tiro acertar o vilao somar pontos ordem crescente surgir outro vilao na tela e som de vilao abatido 
 
- if collision(missile0,player1) then score=score+1:player1x=rand/2:player1y=0:missile0y=255 : goto pointsound
+ if collision(ball,player0) then score=score+1:player1x=rand/2:player1y=0:missile0y=255 : goto pointsound
 
  rem se o vilao encostar no heroi som de explosao retorna para o titulo 
 
- if collision(player0,player1) goto deadsound : then title 
+ ; if collision(player0,player1) goto deadsound : then title
 
 
  rem configuracao de limite de tela 
@@ -213,8 +272,8 @@ skipmove
   rem som dos pontos ( quando o vilao morre)
 
 pointsound
- AUDV0 = 15
- AUDC0 =8
+ AUDV0 = 0
+ AUDC0 = 8
  AUDF0 = 3 
 
   p = p + 1
@@ -228,13 +287,13 @@ pointsound
   rem som do tiro 
 
 firesound
- AUDV0 = 15
- AUDC0 =8
+ AUDV0 = 0
+ AUDC0 = 8
  AUDF0 = 18
 
   rem som de fundo (fica mis facil configurar aqui no tiro) 
 
- AUDV1 = 2
+ AUDV1 = 0
  AUDC1 =  2
  AUDF1 = 31
 
@@ -248,7 +307,7 @@ firesound
 
  rem Som do heroi morredo 
 deadsound
- AUDV1 = 15
+ AUDV1 = 0
  AUDC1 = 8
  AUDF1 = 31
  p = p + 1
