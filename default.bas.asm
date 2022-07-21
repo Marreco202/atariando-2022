@@ -1648,38 +1648,38 @@ scorepointerset
 game
 .L00 ;  rem Generated 14/03/2016 17:44:53 by Visual bB Version 1.0.0.554
 
-.L01 ;  rem *********************************** 
+.
+ ; 
 
-.L02 ;  rem *<M4K video aula>                  *
-
-.L03 ;  rem *<add som no game>               *
-
-.L04 ;  rem *<CanalMundo4k>                   *
-
-.L05 ;  rem <canalmundo4k@gmail.com>
-
-.L06 ;  rem *<license free >                        *
-
-.L07 ;  rem ***********************************
+.L01 ;  rem configuracao geral ( tamanho da rom sistemar de cor  da tv ) 
 
 .
  ; 
 
-.L08 ;  rem configuracao geral ( tamanho da rom sistemar de cor  da tv ) 
+.L02 ;  set tv ntsc
+
+.L03 ;  set romsize 4k
+
+.L04 ;  set smartbranching on
 
 .
  ; 
 
-.L09 ;  set tv ntsc
+.L05 ;  dim _sc1  =  score
 
-.L010 ;  set romsize 4k
+.L06 ;  dim _sc2  =  score  +  1
 
-.L011 ;  set smartbranching on
+.L07 ;  dim _sc3  =  score  +  2
 
-.
- ; 
+.L08 ;  _sc1  =  $0
 
-.L012 ;  rem titulo 
+	LDA #$0
+	STA _sc1
+.L09 ;  _sc3  =  $0
+
+	LDA #$0
+	STA _sc3
+.L010 ;  rem titulo 
 
 .
  ; 
@@ -1687,7 +1687,7 @@ game
 .title
  ; title
 
-.L013 ;  playfield:
+.L011 ;  playfield:
 
   ifconst pfres
 	  ldx #(11>pfres)*(pfres*pfwidth-1)+(11<=pfres)*43
@@ -1696,25 +1696,25 @@ game
   endif
 	jmp pflabel0
 PF_data0
-	.byte %00111101, %10111010
+	.byte %00111010, %10111101
 	if (pfwidth>2)
-	.byte %10111001, %00001011
+	.byte %11001010, %00000000
  endif
-	.byte %00100001, %10010010
+	.byte %00101010, %10000101
 	if (pfwidth>2)
-	.byte %00101001, %00001010
+	.byte %01001010, %01111110
  endif
-	.byte %00111001, %10010010
+	.byte %00110010, %10110101
 	if (pfwidth>2)
-	.byte %10111101, %00001010
+	.byte %11101010, %10100101
  endif
-	.byte %00100001, %10010010
+	.byte %00101010, %10100101
 	if (pfwidth>2)
-	.byte %00100101, %00001010
+	.byte %00100100, %01111110
  endif
-	.byte %00100001, %10010011
+	.byte %00101011, %10111101
 	if (pfwidth>2)
-	.byte %10111101, %00111011
+	.byte %11100100, %00000000
  endif
 	.byte %00000000, %00000000
 	if (pfwidth>2)
@@ -1748,36 +1748,36 @@ pflabel0
 .
  ; 
 
-.L014 ;  rem cor do titulo e fundo da tela 
+.L012 ;  rem cor do titulo e fundo da tela 
 
 .
  ; 
 
-.L015 ;  COLUBK  =  216
+.L013 ;  COLUBK  =  216
 
 	LDA #216
 	STA COLUBK
-.L016 ;  COLUPF  =  $90
+.L014 ;  COLUPF  =  $90
 
 	LDA #$90
 	STA COLUPF
-.L017 ;  drawscreen
+.L015 ;  drawscreen
 
  jsr drawscreen
 .
  ; 
 
-.L018 ;  rem quando finalizar o game esconder os personagens fora da tela 
+.L016 ;  rem quando finalizar o game, esconder os personagens fora da tela 
 
 .
  ; 
 
-.L019 ;  player0x  =  1  :  player0y  =  1
+.L017 ;  player0x  =  1  :  player0y  =  1
 
 	LDA #1
 	STA player0x
 	STA player0y
-.L020 ;  player1x  =  1  :  player1y  =  1
+.L018 ;  player1x  =  1  :  player1y  =  1
 
 	LDA #1
 	STA player1x
@@ -1785,18 +1785,18 @@ pflabel0
 .
  ; 
 
-.L021 ;  rem se o acionado o botao de tiro pular o titulo 
+.L019 ;  rem se o acionado o botao, pular o titulo 
 
 .
  ; 
 
-.L022 ;  if joy0fire  ||  joy1fire then goto skiptitle
+.L020 ;  if joy0fire  ||  joy1fire then goto skiptitle
 
  bit INPT4
-	BMI .skipL022
+	BMI .skipL020
 .condpart0
  jmp .condpart1
-.skipL022
+.skipL020
  bit INPT5
 	BMI .skip0OR
 .condpart1
@@ -1806,19 +1806,19 @@ pflabel0
 .
  ; 
 
-.L023 ;  rem se nao acionado o botao de tiro permanecer no titulo 
+.L021 ;  rem se nao acionado o botao, permanecer no titulo 
 
 .
  ; 
 
-.L024 ;  goto title
+.L022 ;  goto title
 
  jmp .title
 
 .
  ; 
 
-.L025 ;  rem inicio do loop principal 
+.L023 ;  rem inicio do loop principal 
 
 .
  ; 
@@ -1829,12 +1829,12 @@ pflabel0
 .
  ; 
 
-.L026 ;  rem tela de jogo inicial (apos o titulo )
+.L024 ;  rem tela de jogo inicial (apos o titulo )
 
 .
  ; 
 
-.L027 ;  playfield:
+.L025 ;  playfield:
 
   ifconst pfres
 	  ldx #(11>pfres)*(pfres*pfwidth-1)+(11<=pfres)*43
@@ -1898,24 +1898,96 @@ pflabel1
 .
  ; 
 
-.L028 ;  rem posicao dos personagens na tela 
+.L026 ;  rem posicao dos personagens na tela 
 
 .
  ; 
 
-.L029 ;  player0x  =  20  :  player0y  =  47
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L027 ;  rem cor do fundo da tela 
+
+.
+ ; 
+
+.L028 ;  COLUBK  =  216
+
+	LDA #216
+	STA COLUBK
+.
+ ; 
+
+.L029 ;  rem configuracao das contagens de pontos e cor do score 
+
+.
+ ; 
+
+.L030 ;  score  =  00000  :  scorecolor  =  $0E
+
+	LDA #$00
+	STA score+2
+	LDA #$00
+	STA score+1
+	LDA #$00
+	STA score
+	LDA #$0E
+	STA scorecolor
+.L031 ;  m  =  0
+
+	LDA #0
+	STA m
+.
+ ; 
+
+.reset
+ ; reset
+
+.L032 ;  if _sc1  >  $04 then goto gameover
+
+	LDA #$04
+	CMP _sc1
+     BCS .skipL032
+.condpart2
+ jmp .gameover
+
+.skipL032
+.L033 ;  if _sc3  >  $04  &&  _sc3  <  $10 then goto gameover
+
+	LDA #$04
+	CMP _sc3
+     BCS .skipL033
+.condpart3
+	LDA _sc3
+	CMP #$10
+     BCS .skip3then
+.condpart4
+ jmp .gameover
+
+.skip3then
+.skipL033
+.
+ ; 
+
+.L034 ;  player0x  =  20  :  player0y  =  47
 
 	LDA #20
 	STA player0x
 	LDA #47
 	STA player0y
-.L030 ;  player1x  =  130  :  player1y  =  47
+.L035 ;  player1x  =  130  :  player1y  =  47
 
 	LDA #130
 	STA player1x
 	LDA #47
 	STA player1y
-.L031 ;  ballx  =   (  ( rand  &  50 )   +  50 )   :  bally  =   (  ( rand  &  40 )   +  30 ) 
+.L036 ;  ballx  =   (  ( rand  &  50 )   +  50 )   :  bally  =   (  ( rand  &  40 )   +  30 ) 
 
 ; complex statement detected
  jsr randomize
@@ -1929,98 +2001,35 @@ pflabel1
 	CLC
 	ADC #30
 	STA bally
-.L032 ;  if ballx  <  50  ||  ballx  >  100 then goto skiptitle
-
-	LDA ballx
-	CMP #50
-     BCS .skipL032
-.condpart2
- jmp .condpart3
-.skipL032
-	LDA #100
-	CMP ballx
-     BCS .skip1OR
-.condpart3
- jmp .skiptitle
-
-.skip1OR
-.L033 ;  if bally  <  50  ||  bally  >  100 then goto skiptitle
-
-	LDA bally
-	CMP #50
-     BCS .skipL033
-.condpart4
- jmp .condpart5
-.skipL033
-	LDA #100
-	CMP bally
-     BCS .skip2OR
-.condpart5
- jmp .skiptitle
-
-.skip2OR
-.L034 ;  ballheight  =  3  :  CTRLPF  =  $21
+.L037 ;  ballheight  =  3  :  CTRLPF  =  $21
 
 	LDA #3
 	STA ballheight
 	LDA #$21
 	STA CTRLPF
+.L038 ;  drawscreen
+
+ jsr drawscreen
 .
  ; 
 
-.L035 ;  rem configuracao do missil saindo do heroi 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.L036 ;  rem cor do fundo da tela 
-
-.
- ; 
-
-.L037 ;  COLUBK  =  216
-
-	LDA #216
-	STA COLUBK
-.
- ; 
-
-.L038 ;  rem configuracao das contagens de pontos e cor do score 
-
-.
- ; 
-
-.L039 ;  score  =  00000  :  scorecolor  =  $0E
-
-	LDA #$00
-	STA score+2
-	LDA #$00
-	STA score+1
-	LDA #$00
-	STA score
-	LDA #$0E
-	STA scorecolor
-.L040 ;  m  =  0
-
-	LDA #0
-	STA m
-.L041 ;  n  =  0
+.L039 ;  n  =  0
 
 	LDA #0
 	STA n
-.
- ; 
+.L040 ;  p  =  0
 
-.L042 ;  rem loop principal 
+	LDA #0
+	STA p
+.L041 ;  q  =  0
+
+	LDA #0
+	STA q
+.L042 ;  z  =  0
+
+	LDA #0
+	STA z
+.L043 ;  rem loop principal 
 
 .
  ; 
@@ -2031,842 +2040,891 @@ pflabel1
 .
  ; 
 
-.L043 ;  rem cor dos personagens e da base do canhao (heroi)
+.L044 ;  rem cor dos personagens e da base do canhao (heroi)
 
 .
  ; 
 
-.L044 ;  COLUP1  =  $00
+.L045 ;  COLUP1  =  $1E
 
-	LDA #$00
+	LDA #$1E
 	STA COLUP1
-.L045 ;  COLUP0  =  $0E
+.L046 ;  COLUP0  =  $0E
 
 	LDA #$0E
 	STA COLUP0
-.L046 ;  COLUPF  =  $90
+.L047 ;  COLUPF  =  $90
 
 	LDA #$90
 	STA COLUPF
-.L047 ;  f = f + 1
+.L048 ;  f = f + 1
 
 	INC f
-.L048 ;  g = g + 1
+.L049 ;  g = g + 1
 
 	INC g
 .
  ; 
 
-.L049 ;  rem jogador 1
+.L050 ;  rem jogador 1
 
 .
  ; 
 
-.L050 ;  if f  =  10  &&  n  =  0 then player0:
-
-	LDA f
-	CMP #10
-     BNE .skipL050
-.condpart6
-	LDA n
-	CMP #0
-     BNE .skip6then
-.condpart7
-	LDX #<player7then_0
-	STX player0pointerlo
-	LDA #>player7then_0
-	STA player0pointerhi
-	LDA #7
-	STA player0height
-.skip6then
-.skipL050
-.L051 ;  if f  =  10  ||  n  =  0 then player0color:
+.L051 ;  if f  =  10  &&  q  =  0 then player0:
 
 	LDA f
 	CMP #10
      BNE .skipL051
-.condpart8
- jmp .condpart9
-.skipL051
-	LDA n
+.condpart5
+	LDA q
 	CMP #0
-     BNE .skip4OR
-.condpart9
-	LDX #<playercolor9then_0
-	STX player0color
-	LDA #>playercolor9then_0
-	STA player0color+1
-.skip4OR
-.L052 ;  if f  =  20  ||  n  =  0 then player0:
-
-	LDA f
-	CMP #20
-     BNE .skipL052
-.condpart10
- jmp .condpart11
-.skipL052
-	LDA n
-	CMP #0
-     BNE .skip5OR
-.condpart11
-	LDX #<player11then_0
+     BNE .skip5then
+.condpart6
+	LDX #<player6then_0
 	STX player0pointerlo
-	LDA #>player11then_0
+	LDA #>player6then_0
 	STA player0pointerhi
 	LDA #7
 	STA player0height
-.skip5OR
-.L053 ;  if f  =  20  ||  n  =  0 then player0color:
+.skip5then
+.skipL051
+.L052 ;  if f  =  10  &&  q  =  0 then player0color:
+
+	LDA f
+	CMP #10
+     BNE .skipL052
+.condpart7
+	LDA q
+	CMP #0
+     BNE .skip7then
+.condpart8
+	LDX #<playercolor8then_0
+	STX player0color
+	LDA #>playercolor8then_0
+	STA player0color+1
+.skip7then
+.skipL052
+.L053 ;  if f  =  20  &&  q  =  0 then player0:
 
 	LDA f
 	CMP #20
      BNE .skipL053
-.condpart12
- jmp .condpart13
-.skipL053
-	LDA n
+.condpart9
+	LDA q
 	CMP #0
-     BNE .skip6OR
-.condpart13
-	LDX #<playercolor13then_0
-	STX player0color
-	LDA #>playercolor13then_0
-	STA player0color+1
-.skip6OR
-.
- ; 
-
-.L054 ;  if f  =  10  ||  o  =  1 then player0:
-
-	LDA f
-	CMP #10
-     BNE .skipL054
-.condpart14
- jmp .condpart15
-.skipL054
-	LDA o
-	CMP #1
-     BNE .skip7OR
-.condpart15
-	LDX #<player15then_0
+     BNE .skip9then
+.condpart10
+	LDX #<player10then_0
 	STX player0pointerlo
-	LDA #>player15then_0
+	LDA #>player10then_0
 	STA player0pointerhi
 	LDA #7
 	STA player0height
-.skip7OR
-.L055 ;  if f  =  10  ||  o  =  1 then player0color:
+.skip9then
+.skipL053
+.L054 ;  if f  =  20  &&  q  =  0 then player0color:
+
+	LDA f
+	CMP #20
+     BNE .skipL054
+.condpart11
+	LDA q
+	CMP #0
+     BNE .skip11then
+.condpart12
+	LDX #<playercolor12then_0
+	STX player0color
+	LDA #>playercolor12then_0
+	STA player0color+1
+.skip11then
+.skipL054
+.
+ ; 
+
+.L055 ;  if f  =  10  &&  q  =  1 then player0:
 
 	LDA f
 	CMP #10
      BNE .skipL055
-.condpart16
- jmp .condpart17
-.skipL055
-	LDA o
+.condpart13
+	LDA q
 	CMP #1
-     BNE .skip8OR
-.condpart17
-	LDX #<playercolor17then_0
-	STX player0color
-	LDA #>playercolor17then_0
-	STA player0color+1
-.skip8OR
-.L056 ;  if f  =  20  ||  o  =  1 then player0:
-
-	LDA f
-	CMP #20
-     BNE .skipL056
-.condpart18
- jmp .condpart19
-.skipL056
-	LDA o
-	CMP #1
-     BNE .skip9OR
-.condpart19
-	LDX #<player19then_0
+     BNE .skip13then
+.condpart14
+	LDX #<player14then_0
 	STX player0pointerlo
-	LDA #>player19then_0
+	LDA #>player14then_0
 	STA player0pointerhi
 	LDA #7
 	STA player0height
-.skip9OR
-.L057 ;  if f  =  20  ||  o  =  1 then player0color:
+.skip13then
+.skipL055
+.L056 ;  if f  =  10  &&  q  =  1 then player0color:
+
+	LDA f
+	CMP #10
+     BNE .skipL056
+.condpart15
+	LDA q
+	CMP #1
+     BNE .skip15then
+.condpart16
+	LDX #<playercolor16then_0
+	STX player0color
+	LDA #>playercolor16then_0
+	STA player0color+1
+.skip15then
+.skipL056
+.L057 ;  if f  =  20  &&  q  =  1 then player0:
 
 	LDA f
 	CMP #20
      BNE .skipL057
-.condpart20
- jmp .condpart21
+.condpart17
+	LDA q
+	CMP #1
+     BNE .skip17then
+.condpart18
+	LDX #<player18then_0
+	STX player0pointerlo
+	LDA #>player18then_0
+	STA player0pointerhi
+	LDA #7
+	STA player0height
+.skip17then
 .skipL057
-	LDA o
-	CMP #1
-     BNE .skip10OR
-.condpart21
-	LDX #<playercolor21then_0
-	STX player0color
-	LDA #>playercolor21then_0
-	STA player0color+1
-.skip10OR
-.L058 ;  if f  =  30  ||  o  =  1 then player0:
+.L058 ;  if f  =  20  &&  q  =  1 then player0color:
 
 	LDA f
-	CMP #30
+	CMP #20
      BNE .skipL058
-.condpart22
- jmp .condpart23
+.condpart19
+	LDA q
+	CMP #1
+     BNE .skip19then
+.condpart20
+	LDX #<playercolor20then_0
+	STX player0color
+	LDA #>playercolor20then_0
+	STA player0color+1
+.skip19then
 .skipL058
-	LDA o
-	CMP #1
-     BNE .skip11OR
-.condpart23
-	LDX #<player23then_0
-	STX player0pointerlo
-	LDA #>player23then_0
-	STA player0pointerhi
-	LDA #7
-	STA player0height
-.skip11OR
-.L059 ;  if f  =  30  ||  o  =  1 then player0color:
+.
+ ; 
 
-	LDA f
-	CMP #30
-     BNE .skipL059
-.condpart24
- jmp .condpart25
-.skipL059
-	LDA o
-	CMP #1
-     BNE .skip12OR
-.condpart25
-	LDX #<playercolor25then_0
-	STX player0color
-	LDA #>playercolor25then_0
-	STA player0color+1
-.skip12OR
-.L060 ;  if f  =  40  ||  o  =  1 then player0:
+.L059 ;  rem jogador 2
 
-	LDA f
-	CMP #40
+.
+ ; 
+
+.L060 ;  if g  =  10  &&  p  =  0 then player1:
+
+	LDA g
+	CMP #10
      BNE .skipL060
-.condpart26
- jmp .condpart27
+.condpart21
+	LDA p
+	CMP #0
+     BNE .skip21then
+.condpart22
+	LDX #<player22then_1
+	STX player1pointerlo
+	LDA #>player22then_1
+	STA player1pointerhi
+	LDA #7
+	STA player1height
+.skip21then
 .skipL060
-	LDA o
-	CMP #1
-     BNE .skip13OR
-.condpart27
-	LDX #<player27then_0
-	STX player0pointerlo
-	LDA #>player27then_0
-	STA player0pointerhi
-	LDA #7
-	STA player0height
-.skip13OR
-.L061 ;  if f  =  40  ||  o  =  1 then player0color:
+.L061 ;  if g  =  10  &&  p  =  0 then player1color:
 
-	LDA f
-	CMP #40
+	LDA g
+	CMP #10
      BNE .skipL061
-.condpart28
- jmp .condpart29
+.condpart23
+	LDA p
+	CMP #0
+     BNE .skip23then
+.condpart24
+	LDX #<playercolor24then_1
+	STX player1color
+	LDA #>playercolor24then_1
+	STA player1color+1
+.skip23then
 .skipL061
-	LDA o
-	CMP #1
-     BNE .skip14OR
-.condpart29
-	LDX #<playercolor29then_0
-	STX player0color
-	LDA #>playercolor29then_0
-	STA player0color+1
-.skip14OR
-.L062 ;  if f  =  50  ||  o  =  1 then player0:
+.L062 ;  if g  =  20  &&  p  =  0 then player1:
 
-	LDA f
-	CMP #50
+	LDA g
+	CMP #20
      BNE .skipL062
-.condpart30
- jmp .condpart31
-.skipL062
-	LDA o
-	CMP #1
-     BNE .skip15OR
-.condpart31
-	LDX #<player31then_0
-	STX player0pointerlo
-	LDA #>player31then_0
-	STA player0pointerhi
+.condpart25
+	LDA p
+	CMP #0
+     BNE .skip25then
+.condpart26
+	LDX #<player26then_1
+	STX player1pointerlo
+	LDA #>player26then_1
+	STA player1pointerhi
 	LDA #7
-	STA player0height
-.skip15OR
-.L063 ;  if f  =  50  ||  o  =  1 then player0color:
+	STA player1height
+.skip25then
+.skipL062
+.L063 ;  if g  =  20  &&  p  =  0 then player1color:
 
-	LDA f
-	CMP #50
+	LDA g
+	CMP #20
      BNE .skipL063
-.condpart32
- jmp .condpart33
+.condpart27
+	LDA p
+	CMP #0
+     BNE .skip27then
+.condpart28
+	LDX #<playercolor28then_1
+	STX player1color
+	LDA #>playercolor28then_1
+	STA player1color+1
+.skip27then
 .skipL063
-	LDA o
+.
+ ; 
+
+.L064 ;  if g  =  10  &&  p  =  1 then player1:
+
+	LDA g
+	CMP #10
+     BNE .skipL064
+.condpart29
+	LDA p
 	CMP #1
-     BNE .skip16OR
-.condpart33
-	LDX #<playercolor33then_0
-	STX player0color
-	LDA #>playercolor33then_0
-	STA player0color+1
-.skip16OR
-.
- ; 
-
-.L064 ;  rem jogador 2
-
-.
- ; 
-
-.L065 ;  if g  =  10  ||  o  =  0 then player1:
+     BNE .skip29then
+.condpart30
+	LDX #<player30then_1
+	STX player1pointerlo
+	LDA #>player30then_1
+	STA player1pointerhi
+	LDA #7
+	STA player1height
+.skip29then
+.skipL064
+.L065 ;  if g  =  10  &&  p  =  1 then player1color:
 
 	LDA g
 	CMP #10
      BNE .skipL065
-.condpart34
- jmp .condpart35
+.condpart31
+	LDA p
+	CMP #1
+     BNE .skip31then
+.condpart32
+	LDX #<playercolor32then_1
+	STX player1color
+	LDA #>playercolor32then_1
+	STA player1color+1
+.skip31then
 .skipL065
-	LDA o
-	CMP #0
-     BNE .skip17OR
-.condpart35
-	LDX #<player35then_1
+.L066 ;  if g  =  20  &&  p  =  1 then player1:
+
+	LDA g
+	CMP #20
+     BNE .skipL066
+.condpart33
+	LDA p
+	CMP #1
+     BNE .skip33then
+.condpart34
+	LDX #<player34then_1
 	STX player1pointerlo
-	LDA #>player35then_1
+	LDA #>player34then_1
 	STA player1pointerhi
 	LDA #7
 	STA player1height
-.skip17OR
-.L066 ;  if g  =  10  ||  o  =  0 then player1color:
-
-	LDA g
-	CMP #10
-     BNE .skipL066
-.condpart36
- jmp .condpart37
+.skip33then
 .skipL066
-	LDA o
-	CMP #0
-     BNE .skip18OR
-.condpart37
-	LDX #<playercolor37then_1
-	STX player1color
-	LDA #>playercolor37then_1
-	STA player1color+1
-.skip18OR
-.L067 ;  if g  =  20  ||  o  =  0 then player1:
+.L067 ;  if g  =  20  &&  p  =  1 then player1color:
 
 	LDA g
 	CMP #20
      BNE .skipL067
-.condpart38
- jmp .condpart39
-.skipL067
-	LDA o
-	CMP #0
-     BNE .skip19OR
-.condpart39
-	LDX #<player39then_1
-	STX player1pointerlo
-	LDA #>player39then_1
-	STA player1pointerhi
-	LDA #7
-	STA player1height
-.skip19OR
-.L068 ;  if g  =  20  ||  o  =  0 then player1color:
-
-	LDA g
-	CMP #20
-     BNE .skipL068
-.condpart40
- jmp .condpart41
-.skipL068
-	LDA o
-	CMP #0
-     BNE .skip20OR
-.condpart41
-	LDX #<playercolor41then_1
+.condpart35
+	LDA p
+	CMP #1
+     BNE .skip35then
+.condpart36
+	LDX #<playercolor36then_1
 	STX player1color
-	LDA #>playercolor41then_1
+	LDA #>playercolor36then_1
 	STA player1color+1
-.skip20OR
+.skip35then
+.skipL067
 .
  ; 
 
-.
- ; 
-
-.L069 ;  if f = 50 then f = 0
+.L068 ;  if f = 20 then f = 0
 
 	LDA f
-	CMP #50
-     BNE .skipL069
-.condpart42
+	CMP #20
+     BNE .skipL068
+.condpart37
 	LDA #0
 	STA f
-.skipL069
-.L070 ;  if g = 20 then g = 0
+.skipL068
+.L069 ;  if g = 20 then g = 0
 
 	LDA g
 	CMP #20
-     BNE .skipL070
-.condpart43
+     BNE .skipL069
+.condpart38
 	LDA #0
 	STA g
-.skipL070
+.skipL069
 .
  ; 
 
-.L071 ;  rem velocidade que o vilao ataca o heroi 
+.L070 ;  rem velocidade  
 
 .
  ; 
 
-.L072 ;  a  =  a  +  1  :  if a  <  4 then goto checkfire
+.L071 ;  rem a = a + 1  if a < 4 then goto checkfire
 
-	INC a
-	LDA a
-	CMP #4
-     BCS .skipL072
+.L072 ;  rem a = 0
+
+.
+ ; 
+
+.
+ ; 
+
+.L073 ;  rem forma que o vilao persegue o heroi 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L074 ;  rem verificando se o tiro saiu do heroi 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L075 ;  rem tiro emitido inicia o jogo e sons de fundo e disparo  
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L076 ;  rem se o tiro acertar o vilao somar pontos ordem crescente surgir outro vilao na tela e som de vilao abatido 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L077 ;  rem se o vilao encostar no heroi som de explosao retorna para o titulo 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L078 ;  rem configuracao de limite de tela 
+
+.
+ ; 
+
+.L079 ;  if m  =  1  &&  collision(player0,playfield) then player0y  =  player0y  +  1
+
+	LDA m
+	CMP #1
+     BNE .skipL079
+.condpart39
+	bit 	CXP0FB
+	BPL .skip39then
+.condpart40
+	INC player0y
+.skip39then
+.skipL079
+.L080 ;  if m  =  2  &&  collision(player0,playfield) then player0x  =  player0x  +  1
+
+	LDA m
+	CMP #2
+     BNE .skipL080
+.condpart41
+	bit 	CXP0FB
+	BPL .skip41then
+.condpart42
+	INC player0x
+.skip41then
+.skipL080
+.L081 ;  if m  =  3  &&  collision(player0,playfield) then player0y  =  player0y  -  1
+
+	LDA m
+	CMP #3
+     BNE .skipL081
+.condpart43
+	bit 	CXP0FB
+	BPL .skip43then
 .condpart44
- jmp .checkfire
+	DEC player0y
+.skip43then
+.skipL081
+.L082 ;  if m  =  4  &&  collision(player0,playfield) then player0x  =  player0x  -  1
 
-.skipL072
-.L073 ;  a  =  0
+	LDA m
+	CMP #4
+     BNE .skipL082
+.condpart45
+	bit 	CXP0FB
+	BPL .skip45then
+.condpart46
+	DEC player0x
+.skip45then
+.skipL082
+.
+ ; 
+
+.L083 ;  if n  =  1  &&  collision(player1,playfield) then player1y  =  player1y  +  1
+
+	LDA n
+	CMP #1
+     BNE .skipL083
+.condpart47
+	bit 	CXP1FB
+	BPL .skip47then
+.condpart48
+	INC player1y
+.skip47then
+.skipL083
+.L084 ;  if n  =  2  &&  collision(player1,playfield) then player1x  =  player1x  +  1
+
+	LDA n
+	CMP #2
+     BNE .skipL084
+.condpart49
+	bit 	CXP1FB
+	BPL .skip49then
+.condpart50
+	INC player1x
+.skip49then
+.skipL084
+.L085 ;  if n  =  3  &&  collision(player1,playfield) then player1y  =  player1y  -  1
+
+	LDA n
+	CMP #3
+     BNE .skipL085
+.condpart51
+	bit 	CXP1FB
+	BPL .skip51then
+.condpart52
+	DEC player1y
+.skip51then
+.skipL085
+.L086 ;  if n  =  4  &&  collision(player1,playfield) then player1x  =  player1x  -  1
+
+	LDA n
+	CMP #4
+     BNE .skipL086
+.condpart53
+	bit 	CXP1FB
+	BPL .skip53then
+.condpart54
+	DEC player1x
+.skip53then
+.skipL086
+.
+ ; 
+
+.L087 ;  rem configuracao de movimentos
+
+.
+ ; 
+
+.L088 ;  if joy0up  &&  !collision(player0,playfield) then player0y  =  player0y  -  1  :  m  =  1
+
+ lda #$10
+ bit SWCHA
+	BNE .skipL088
+.condpart55
+	bit 	CXP0FB
+	BMI .skip55then
+.condpart56
+	DEC player0y
+	LDA #1
+	STA m
+.skip55then
+.skipL088
+.L089 ;  if joy0left  &&  !collision(player0,playfield) then player0x  =  player0x  -  1  :  REFP0  =  8  :  m  =  2
+
+ bit SWCHA
+	BVS .skipL089
+.condpart57
+	bit 	CXP0FB
+	BMI .skip57then
+.condpart58
+	DEC player0x
+	LDA #8
+	STA REFP0
+	LDA #2
+	STA m
+.skip57then
+.skipL089
+.L090 ;  if joy0down  &&  !collision(player0,playfield) then player0y  =  player0y  +  1  :  m  =  3
+
+ lda #$20
+ bit SWCHA
+	BNE .skipL090
+.condpart59
+	bit 	CXP0FB
+	BMI .skip59then
+.condpart60
+	INC player0y
+	LDA #3
+	STA m
+.skip59then
+.skipL090
+.L091 ;  if joy0right  &&  !collision(player0,playfield) then player0x  =  player0x  +  1  :  m  =  4  :  REFP0  =  0
+
+ bit SWCHA
+	BMI .skipL091
+.condpart61
+	bit 	CXP0FB
+	BMI .skip61then
+.condpart62
+	INC player0x
+	LDA #4
+	STA m
+	LDA #0
+	STA REFP0
+.skip61then
+.skipL091
+.
+ ; 
+
+.L092 ;  if joy1up  &&  !collision(player1,playfield) then player1y  =  player1y  -  1  :  n  =  1
+
+ lda #1
+ bit SWCHA
+	BNE .skipL092
+.condpart63
+	bit 	CXP1FB
+	BMI .skip63then
+.condpart64
+	DEC player1y
+	LDA #1
+	STA n
+.skip63then
+.skipL092
+.L093 ;  if joy1left  &&  !collision(player1,playfield) then player1x  =  player1x  -  1  :  REFP1  =  8  :  n  =  2
+
+ lda #4
+ bit SWCHA
+	BNE .skipL093
+.condpart65
+	bit 	CXP1FB
+	BMI .skip65then
+.condpart66
+	DEC player1x
+	LDA #8
+	STA REFP1
+	LDA #2
+	STA n
+.skip65then
+.skipL093
+.L094 ;  if joy1down  &&  !collision(player1,playfield) then player1y  =  player1y  +  1  :  n  =  3
+
+ lda #2
+ bit SWCHA
+	BNE .skipL094
+.condpart67
+	bit 	CXP1FB
+	BMI .skip67then
+.condpart68
+	INC player1y
+	LDA #3
+	STA n
+.skip67then
+.skipL094
+.L095 ;  if joy1right  &&  !collision(player1,playfield) then player1x  =  player1x  +  1  :  n  =  4  :  REFP1  =  0
+
+ lda #8
+ bit SWCHA
+	BNE .skipL095
+.condpart69
+	bit 	CXP1FB
+	BMI .skip69then
+.condpart70
+	INC player1x
+	LDA #4
+	STA n
+	LDA #0
+	STA REFP1
+.skip69then
+.skipL095
+.
+ ; 
+
+.L096 ;  if collision(ball,player0)  &&  z  =  0 then p  =  0  :  q  =  1  :  ballx  =  100  :  bally  =  130  :  z  =  1
+
+	bit 	CXP0FB
+	BVC .skipL096
+.condpart71
+	LDA z
+	CMP #0
+     BNE .skip71then
+.condpart72
+	LDA #0
+	STA p
+	LDA #1
+	STA q
+	LDA #100
+	STA ballx
+	LDA #130
+	STA bally
+	LDA #1
+	STA z
+.skip71then
+.skipL096
+.L097 ;  if collision(ball,player1)  &&  z  =  0 then p  =  1  :  q  =  0  :  ballx  =  100  :  bally  =  130  :  z  =  1
+
+	bit 	CXP1FB
+	BVC .skipL097
+.condpart73
+	LDA z
+	CMP #0
+     BNE .skip73then
+.condpart74
+	LDA #1
+	STA p
+	LDA #0
+	STA q
+	LDA #100
+	STA ballx
+	LDA #130
+	STA bally
+	LDA #1
+	STA z
+.skip73then
+.skipL097
+.
+ ; 
+
+.L098 ;  z  =  0
 
 	LDA #0
-	STA a
+	STA z
+.L099 ;  if collision(player0,player1)  &&  p  =  1  &&  q  =  0  &&  z  =  0 then p  =  0  :  q  =  1  :  z  =  1  :  player1x  =  player1x  +  30
+
+	bit 	CXPPMM
+	BPL .skipL099
+.condpart75
+	LDA p
+	CMP #1
+     BNE .skip75then
+.condpart76
+	LDA q
+	CMP #0
+     BNE .skip76then
+.condpart77
+	LDA z
+	CMP #0
+     BNE .skip77then
+.condpart78
+	LDA #0
+	STA p
+	LDA #1
+	STA q
+	STA z
+	LDA player1x
+	CLC
+	ADC #30
+	STA player1x
+.skip77then
+.skip76then
+.skip75then
+.skipL099
+.L0100 ;  if collision(player1,player0)  &&  p  =  0  &&  q  =  1  &&  z  =  0 then p  =  1  :  q  =  0  :  z  =  1  :  player0x  =  player0x  -  30
+
+	bit 	CXPPMM
+	BPL .skipL0100
+.condpart79
+	LDA p
+	CMP #0
+     BNE .skip79then
+.condpart80
+	LDA q
+	CMP #1
+     BNE .skip80then
+.condpart81
+	LDA z
+	CMP #0
+     BNE .skip81then
+.condpart82
+	LDA #1
+	STA p
+	LDA #0
+	STA q
+	LDA #1
+	STA z
+	LDA player0x
+	SEC
+	SBC #30
+	STA player0x
+.skip81then
+.skip80then
+.skip79then
+.skipL0100
+.L0101 ;  z  =  0
+
+	LDA #0
+	STA z
 .
  ; 
 
-.L074 ;  rem forma que o vilao persegue o heroi 
+.L0102 ;  if q  =  1  &&  player0x  >=  140 then _sc1  =  _sc1  +  $1  :  goto reset
 
+	LDA q
+	CMP #1
+     BNE .skipL0102
+.condpart83
+	LDA player0x
+	CMP #140
+     BCC .skip83then
+.condpart84
+	LDA _sc1
+	CLC
+	ADC #$1
+	STA _sc1
+ jmp .reset
+
+.skip83then
+.skipL0102
+.L0103 ;  if p  =  1  &&  player1x  <=  25 then _sc3  =  _sc3  +  $10  :  goto reset
+
+	LDA p
+	CMP #1
+     BNE .skipL0103
+.condpart85
+	LDA #25
+	CMP player1x
+     BCC .skip85then
+.condpart86
+	LDA _sc3
+	CLC
+	ADC #$10
+	STA _sc3
+ jmp .reset
+
+.skip85then
+.skipL0103
 .
  ; 
 
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.L075 ;  rem verificando se o tiro saiu do heroi 
-
-.
- ; 
-
-.checkfire
- ; checkfire
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.skip
- ; skip
-
-.L076 ;  rem tiro emitido inicia o jogo e sons de fundo e disparo  
-
-.
- ; 
-
-.
- ; 
-
-.draw
- ; draw
-
-.L077 ;  drawscreen
+.L0104 ;  drawscreen
 
  jsr drawscreen
 .
  ; 
 
-.L078 ;  rem se o tiro acertar o vilao somar pontos ordem crescente surgir outro vilao na tela e som de vilao abatido 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.L079 ;  rem se o vilao encostar no heroi som de explosao retorna para o titulo 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.
- ; 
-
-.L080 ;  rem configuracao de limite de tela 
-
-.
- ; 
-
-.L081 ;  if m  =  1  &&  collision(player0,playfield) then player0y  =  player0y  +  1  :  goto skipmove
-
-	LDA m
-	CMP #1
-     BNE .skipL081
-.condpart45
-	bit 	CXP0FB
-	BPL .skip45then
-.condpart46
-	INC player0y
- jmp .skipmove
-
-.skip45then
-.skipL081
-.L082 ;  if m  =  2  &&  collision(player0,playfield) then player0x  =  player0x  +  1  :  goto skipmove
-
-	LDA m
-	CMP #2
-     BNE .skipL082
-.condpart47
-	bit 	CXP0FB
-	BPL .skip47then
-.condpart48
-	INC player0x
- jmp .skipmove
-
-.skip47then
-.skipL082
-.L083 ;  if m  =  3  &&  collision(player0,playfield) then player0y  =  player0y  -  1  :  goto skipmove
-
-	LDA m
-	CMP #3
-     BNE .skipL083
-.condpart49
-	bit 	CXP0FB
-	BPL .skip49then
-.condpart50
-	DEC player0y
- jmp .skipmove
-
-.skip49then
-.skipL083
-.L084 ;  if m  =  4  &&  collision(player0,playfield) then player0x  =  player0x  -  1  :  goto skipmove
-
-	LDA m
-	CMP #4
-     BNE .skipL084
-.condpart51
-	bit 	CXP0FB
-	BPL .skip51then
-.condpart52
-	DEC player0x
- jmp .skipmove
-
-.skip51then
-.skipL084
-.
- ; 
-
-.L085 ;  if n  =  1  &&  collision(player1,playfield) then player1y  =  player1y  +  1  :  goto skipmove
-
-	LDA n
-	CMP #1
-     BNE .skipL085
-.condpart53
-	bit 	CXP1FB
-	BPL .skip53then
-.condpart54
-	INC player1y
- jmp .skipmove
-
-.skip53then
-.skipL085
-.L086 ;  if n  =  2  &&  collision(player1,playfield) then player1x  =  player1x  +  1  :  goto skipmove
-
-	LDA n
-	CMP #2
-     BNE .skipL086
-.condpart55
-	bit 	CXP1FB
-	BPL .skip55then
-.condpart56
-	INC player1x
- jmp .skipmove
-
-.skip55then
-.skipL086
-.L087 ;  if n  =  3  &&  collision(player1,playfield) then player1y  =  player1y  -  1  :  goto skipmove
-
-	LDA n
-	CMP #3
-     BNE .skipL087
-.condpart57
-	bit 	CXP1FB
-	BPL .skip57then
-.condpart58
-	DEC player1y
- jmp .skipmove
-
-.skip57then
-.skipL087
-.L088 ;  if n  =  4  &&  collision(player1,playfield) then player1x  =  player1x  -  1  :  goto skipmove
-
-	LDA n
-	CMP #4
-     BNE .skipL088
-.condpart59
-	bit 	CXP1FB
-	BPL .skip59then
-.condpart60
-	DEC player1x
- jmp .skipmove
-
-.skip59then
-.skipL088
-.
- ; 
-
-.L089 ;  rem configuracao de movimentos do heroi 
-
-.
- ; 
-
-.L090 ;  if joy0up  &&  !collision(player0,playfield) then player0y  =  player0y  -  1  :  m  =  1  :  goto skipmove
-
- lda #$10
- bit SWCHA
-	BNE .skipL090
-.condpart61
-	bit 	CXP0FB
-	BMI .skip61then
-.condpart62
-	DEC player0y
-	LDA #1
-	STA m
- jmp .skipmove
-
-.skip61then
-.skipL090
-.L091 ;  if joy0left  &&  !collision(player0,playfield) then player0x  =  player0x  -  1  :  REFP0  =  8  :  m  =  2  :  goto skipmove
-
- bit SWCHA
-	BVS .skipL091
-.condpart63
-	bit 	CXP0FB
-	BMI .skip63then
-.condpart64
-	DEC player0x
-	LDA #8
-	STA REFP0
-	LDA #2
-	STA m
- jmp .skipmove
-
-.skip63then
-.skipL091
-.L092 ;  if joy0down  &&  !collision(player0,playfield) then player0y  =  player0y  +  1  :  m  =  3  :  goto skipmove
-
- lda #$20
- bit SWCHA
-	BNE .skipL092
-.condpart65
-	bit 	CXP0FB
-	BMI .skip65then
-.condpart66
-	INC player0y
-	LDA #3
-	STA m
- jmp .skipmove
-
-.skip65then
-.skipL092
-.L093 ;  if joy0right  &&  !collision(player0,playfield) then player0x  =  player0x  +  1  :  m  =  4  :  REFP0  =  0  :  goto skipmove
-
- bit SWCHA
-	BMI .skipL093
-.condpart67
-	bit 	CXP0FB
-	BMI .skip67then
-.condpart68
-	INC player0x
-	LDA #4
-	STA m
-	LDA #0
-	STA REFP0
- jmp .skipmove
-
-.skip67then
-.skipL093
-.
- ; 
-
-.L094 ;  if joy1up  &&  !collision(player1,playfield) then player1y  =  player1y  -  1  :  n  =  1  :  goto skipmove
-
- lda #1
- bit SWCHA
-	BNE .skipL094
-.condpart69
-	bit 	CXP1FB
-	BMI .skip69then
-.condpart70
-	DEC player1y
-	LDA #1
-	STA n
- jmp .skipmove
-
-.skip69then
-.skipL094
-.L095 ;  if joy1left  &&  !collision(player1,playfield) then player1x  =  player1x  -  1  :  REFP1  =  8  :  n  =  2  :  goto skipmove
-
- lda #4
- bit SWCHA
-	BNE .skipL095
-.condpart71
-	bit 	CXP1FB
-	BMI .skip71then
-.condpart72
-	DEC player1x
-	LDA #8
-	STA REFP1
-	LDA #2
-	STA n
- jmp .skipmove
-
-.skip71then
-.skipL095
-.L096 ;  if joy1down  &&  !collision(player1,playfield) then player1y  =  player1y  +  1  :  n  =  3  :  goto skipmove
-
- lda #2
- bit SWCHA
-	BNE .skipL096
-.condpart73
-	bit 	CXP1FB
-	BMI .skip73then
-.condpart74
-	INC player1y
-	LDA #3
-	STA n
- jmp .skipmove
-
-.skip73then
-.skipL096
-.L097 ;  if joy1right  &&  !collision(player1,playfield) then player1x  =  player1x  +  1  :  n  =  4  :  REFP1  =  0  :  goto skipmove
-
- lda #8
- bit SWCHA
-	BNE .skipL097
-.condpart75
-	bit 	CXP1FB
-	BMI .skip75then
-.condpart76
-	INC player1x
-	LDA #4
-	STA n
-	LDA #0
-	STA REFP1
- jmp .skipmove
-
-.skip75then
-.skipL097
-.
- ; 
-
-.L098 ;  if collision(ball,player0) then score = score + 1  :  o  =  1  :  n  =  1 :  goto pointsound
-
-	bit 	CXP0FB
-	BVC .skipL098
-.condpart77
-	SED
-	CLC
-	LDA score+2
-	ADC #$01
-	STA score+2
-	LDA score+1
-	ADC #$00
-	STA score+1
-	LDA score
-	ADC #$00
-	STA score
-	CLD
-	LDA #1
-	STA o
-	STA n
- jmp .pointsound
-
-.skipL098
 .
  ; 
 
 .skipmove
  ; skipmove
 
-.L099 ;  if player0x  <  player1x then REFP1  =  8
+.L0105 ;  if player0x  <  player1x then REFP1  =  8
 
 	LDA player0x
 	CMP player1x
-     BCS .skipL099
-.condpart78
+     BCS .skipL0105
+.condpart87
 	LDA #8
 	STA REFP1
-.skipL099
-.L0100 ;  if player0x  >  player1x then REFP1  =  0
+.skipL0105
+.L0106 ;  if player0x  >  player1x then REFP1  =  0
 
 	LDA player1x
 	CMP player0x
-     BCS .skipL0100
-.condpart79
+     BCS .skipL0106
+.condpart88
 	LDA #0
 	STA REFP1
-.skipL0100
-.L0101 ;  if player1x  <  player0x then REFP0  =  8
+.skipL0106
+.L0107 ;  if player1x  <  player0x then REFP0  =  8
 
 	LDA player1x
 	CMP player0x
-     BCS .skipL0101
-.condpart80
+     BCS .skipL0107
+.condpart89
 	LDA #8
 	STA REFP0
-.skipL0101
-.L0102 ;  if player1x  >  player0x then REFP0  =  0
+.skipL0107
+.L0108 ;  if player1x  >  player0x then REFP0  =  0
 
 	LDA player0x
 	CMP player1x
-     BCS .skipL0102
-.condpart81
+     BCS .skipL0108
+.condpart90
 	LDA #0
 	STA REFP0
-.skipL0102
-.L0103 ;  goto main
+.skipL0108
+.L0109 ;  goto main
 
  jmp .main
 
@@ -2876,7 +2934,7 @@ pflabel1
 .
  ; 
 
-.L0104 ;  rem fim do loop principal 
+.L0110 ;  rem fim do loop principal 
 
 .
  ; 
@@ -2884,12 +2942,12 @@ pflabel1
 .
  ; 
 
-.L0105 ;  rem configuracao de sons do jogo 
+.L0111 ;  rem configuracao de sons do jogo 
 
 .
  ; 
 
-.L0106 ;  rem som dos pontos ( quando o vilao morre)
+.L0112 ;  rem som dos pontos ( quando o vilao morre)
 
 .
  ; 
@@ -2897,30 +2955,30 @@ pflabel1
 .pointsound
  ; pointsound
 
-.L0107 ;  AUDV0  =  0
+.L0113 ;  AUDV0  =  0
 
 	LDA #0
 	STA AUDV0
-.L0108 ;  AUDC0  =  8
+.L0114 ;  AUDC0  =  8
 
 	LDA #8
 	STA AUDC0
-.L0109 ;  AUDF0  =  3
+.L0115 ;  AUDF0  =  3
 
 	LDA #3
 	STA AUDF0
 .
  ; 
 
-.L0110 ;  p  =  p  +  1
+.L0116 ;  p  =  p  +  1
 
 	INC p
-.L0111 ;  drawscreen
+.L0117 ;  drawscreen
 
  jsr drawscreen
-.L0112 ;  rem tempo que o som toca 
+.L0118 ;  rem tempo que o som toca 
 
-.L0113 ;  if p  <  8 then pointsound
+.L0119 ;  if p  <  8 then pointsound
 
 	LDA p
 	CMP #8
@@ -2931,24 +2989,24 @@ pflabel1
 	jmp .pointsound
 .0skippointsound
  endif
-.L0114 ;  p  =  0
+.L0120 ;  p  =  0
 
 	LDA #0
 	STA p
-.L0115 ;  AUDV0  =  0 :  AUDC0  =  0 :  AUDF0  =  0
+.L0121 ;  AUDV0  =  0 :  AUDC0  =  0 :  AUDF0  =  0
 
 	LDA #0
 	STA AUDV0
 	STA AUDC0
 	STA AUDF0
-.L0116 ;  goto main
+.L0122 ;  goto main
 
  jmp .main
 
 .
  ; 
 
-.L0117 ;  rem som do tiro 
+.L0123 ;  rem som do tiro 
 
 .
  ; 
@@ -2956,50 +3014,50 @@ pflabel1
 .firesound
  ; firesound
 
-.L0118 ;  AUDV0  =  0
+.L0124 ;  AUDV0  =  0
 
 	LDA #0
 	STA AUDV0
-.L0119 ;  AUDC0  =  8
+.L0125 ;  AUDC0  =  8
 
 	LDA #8
 	STA AUDC0
-.L0120 ;  AUDF0  =  18
+.L0126 ;  AUDF0  =  18
 
 	LDA #18
 	STA AUDF0
 .
  ; 
 
-.L0121 ;  rem som de fundo (fica mis facil configurar aqui no tiro) 
+.L0127 ;  rem som de fundo (fica mis facil configurar aqui no tiro) 
 
 .
  ; 
 
-.L0122 ;  AUDV1  =  0
+.L0128 ;  AUDV1  =  0
 
 	LDA #0
 	STA AUDV1
-.L0123 ;  AUDC1  =  2
+.L0129 ;  AUDC1  =  2
 
 	LDA #2
 	STA AUDC1
-.L0124 ;  AUDF1  =  31
+.L0130 ;  AUDF1  =  31
 
 	LDA #31
 	STA AUDF1
 .
  ; 
 
-.L0125 ;  p  =  p  +  1
+.L0131 ;  p  =  p  +  1
 
 	INC p
-.L0126 ;  drawscreen
+.L0132 ;  drawscreen
 
  jsr drawscreen
-.L0127 ;  rem tempo que o som toca
+.L0133 ;  rem tempo que o som toca
 
-.L0128 ;  if p  <  5 then firesound
+.L0134 ;  if p  <  5 then firesound
 
 	LDA p
 	CMP #5
@@ -3010,49 +3068,49 @@ pflabel1
 	jmp .firesound
 .1skipfiresound
  endif
-.L0129 ;  p  =  0
+.L0135 ;  p  =  0
 
 	LDA #0
 	STA p
-.L0130 ;  AUDV0  =  0 :  AUDC0  =  0 :  AUDF0  =  0
+.L0136 ;  AUDV0  =  0 :  AUDC0  =  0 :  AUDF0  =  0
 
 	LDA #0
 	STA AUDV0
 	STA AUDC0
 	STA AUDF0
-.L0131 ;  goto main
+.L0137 ;  goto main
 
  jmp .main
 
 .
  ; 
 
-.L0132 ;  rem Som do heroi morredo 
+.L0138 ;  rem Som do heroi morredo 
 
 .deadsound
  ; deadsound
 
-.L0133 ;  AUDV1  =  0
+.L0139 ;  AUDV1  =  0
 
 	LDA #0
 	STA AUDV1
-.L0134 ;  AUDC1  =  8
+.L0140 ;  AUDC1  =  8
 
 	LDA #8
 	STA AUDC1
-.L0135 ;  AUDF1  =  31
+.L0141 ;  AUDF1  =  31
 
 	LDA #31
 	STA AUDF1
-.L0136 ;  p  =  p  +  1
+.L0142 ;  p  =  p  +  1
 
 	INC p
-.L0137 ;  drawscreen
+.L0143 ;  drawscreen
 
  jsr drawscreen
-.L0138 ;  rem tempo que o som toca 
+.L0144 ;  rem tempo que o som toca 
 
-.L0139 ;  if p  <  30 then deadsound
+.L0145 ;  if p  <  30 then deadsound
 
 	LDA p
 	CMP #30
@@ -3063,45 +3121,241 @@ pflabel1
 	jmp .deadsound
 .2skipdeadsound
  endif
-.L0140 ;  p  =  0
+.L0146 ;  p  =  0
 
 	LDA #0
 	STA p
-.L0141 ;  AUDV1  =  0 :  AUDC1  =  0 :  AUDF1  =  0
+.L0147 ;  AUDV1  =  0 :  AUDC1  =  0 :  AUDF1  =  0
 
 	LDA #0
 	STA AUDV1
 	STA AUDC1
 	STA AUDF1
-.L0142 ;  if a  =  0 then goto title
+.L0148 ;  if a  =  0 then goto title
 
 	LDA a
 	CMP #0
-     BNE .skipL0142
-.condpart82
+     BNE .skipL0148
+.condpart91
  jmp .title
 
-.skipL0142
+.skipL0148
 .
  ; 
 
-.L0143 ;  goto main
+.L0149 ;  goto main
 
  jmp .main
 
 .
  ; 
 
+.gameover
+ ; gameover
+
 .
  ; 
 
-.L0144 ;  rem fim da programacao  ( Canal Mundo4k)
+.L0150 ;  if joy0fire  ||  joy1fire then goto credits
+
+ bit INPT4
+	BMI .skipL0150
+.condpart92
+ jmp .condpart93
+.skipL0150
+ bit INPT5
+	BMI .skip44OR
+.condpart93
+ jmp .credits
+
+.skip44OR
+.
+ ; 
+
+.L0151 ;  playfield:
+
+  ifconst pfres
+	  ldx #(11>pfres)*(pfres*pfwidth-1)+(11<=pfres)*43
+  else
+	  ldx #((11*pfwidth-1)*((11*pfwidth-1)<47))+(47*((11*pfwidth-1)>=47))
+  endif
+	jmp pflabel2
+PF_data2
+	.byte %00000000, %00000000
+	if (pfwidth>2)
+	.byte %00000000, %00000000
+ endif
+	.byte %00111110, %10110010
+	if (pfwidth>2)
+	.byte %10011110, %00010000
+ endif
+	.byte %00100000, %01010010
+	if (pfwidth>2)
+	.byte %10010000, %00010000
+ endif
+	.byte %00100110, %01010101
+	if (pfwidth>2)
+	.byte %10011100, %00010000
+ endif
+	.byte %00100010, %00010111
+	if (pfwidth>2)
+	.byte %10010000, %00010000
+ endif
+	.byte %00111110, %00000101
+	if (pfwidth>2)
+	.byte %00011110, %00010000
+ endif
+	.byte %00011010, %11010000
+	if (pfwidth>2)
+	.byte %11001100, %00010000
+ endif
+	.byte %00100101, %01001000
+	if (pfwidth>2)
+	.byte %00010010, %00010000
+ endif
+	.byte %00100100, %11000101
+	if (pfwidth>2)
+	.byte %10010100, %00010000
+ endif
+	.byte %00100100, %01000101
+	if (pfwidth>2)
+	.byte %00011000, %00000000
+ endif
+	.byte %00011000, %11000010
+	if (pfwidth>2)
+	.byte %11010110, %00010000
+ endif
+pflabel2
+	lda PF_data2,x
+	sta playfield,x
+	dex
+	bpl pflabel2
+.L0152 ;  player0x  =  0  :  player0y  =  0
+
+	LDA #0
+	STA player0x
+	STA player0y
+.L0153 ;  player1x  =  0  :  player1y  =  0
+
+	LDA #0
+	STA player1x
+	STA player1y
+.
+ ; 
+
+.L0154 ;  drawscreen
+
+ jsr drawscreen
+.L0155 ;  goto gameover
+
+ jmp .gameover
+
+.
+ ; 
+
+.credits
+ ; credits
+
+.
+ ; 
+
+.L0156 ;  if joy0up  ||  joy1up then goto title
+
+ lda #$10
+ bit SWCHA
+	BNE .skipL0156
+.condpart94
+ jmp .condpart95
+.skipL0156
+ lda #1
+ bit SWCHA
+	BNE .skip45OR
+.condpart95
+ jmp .title
+
+.skip45OR
+.
+ ; 
+
+.L0157 ;  player0x  =  80  :  player0y  =  47
+
+	LDA #80
+	STA player0x
+	LDA #47
+	STA player0y
+.L0158 ;  player1x  =  player0x  +  8  :  player1y  =  47
+
+	LDA player0x
+	CLC
+	ADC #8
+	STA player1x
+	LDA #47
+	STA player1y
+.
+ ; 
+
+.
+ ; 
+
+.
+ ; 
+
+.L0159 ;  rem nomes dos creditos 
+
+.
+ ; 
+
+.L0160 ;  player0:
+
+	LDX #<playerL0160_0
+	STX player0pointerlo
+	LDA #>playerL0160_0
+	STA player0pointerhi
+	LDA #15
+	STA player0height
+.L0161 ;  player1:
+
+	LDX #<playerL0161_1
+	STX player1pointerlo
+	LDA #>playerL0161_1
+	STA player1pointerhi
+	LDA #15
+	STA player1height
+.
+ ; 
+
+.L0162 ;  COLUBK  =  0
+
+	LDA #0
+	STA COLUBK
+.L0163 ;  COLUPF  =  $01
+
+	LDA #$01
+	STA COLUPF
+.L0164 ;  COLUP0  =  $42
+
+	LDA #$42
+	STA COLUP0
+.L0165 ;  COLUP1  =  $42
+
+	LDA #$42
+	STA COLUP1
+.
+ ; 
+
+.L0166 ;  drawscreen
+
+ jsr drawscreen
+.L0167 ;  goto credits
+
+ jmp .credits
+
  if (<*) > (<(*+7))
 	repeat ($100-<*)
 	.byte 0
 	repend
 	endif
-player7then_0
+player6then_0
 	.byte         %00100100
 	.byte         %00100100
 	.byte         %00011000
@@ -3115,7 +3369,7 @@ player7then_0
 	.byte 0
 	repend
 	endif
-playercolor9then_0
+playercolor8then_0
 	.byte     $0E;
 	.byte     $0E;
 	.byte     $0E;
@@ -3129,7 +3383,7 @@ playercolor9then_0
 	.byte 0
 	repend
 	endif
-player11then_0
+player10then_0
 	.byte         %01000010
 	.byte         %00100100
 	.byte         %00011000
@@ -3143,7 +3397,7 @@ player11then_0
 	.byte 0
 	repend
 	endif
-playercolor13then_0
+playercolor12then_0
 	.byte     $0E;
 	.byte     $0E;
 	.byte     $0E;
@@ -3157,50 +3411,21 @@ playercolor13then_0
 	.byte 0
 	repend
 	endif
-player15then_0
-	.byte         %00100100
-	.byte         %00100100
-	.byte         %00011001
-	.byte         %00011010
-	.byte         %00111100
-	.byte         %01011000
-	.byte         %00010000
-	.byte         %00011000
- if (<*) > (<(*+7))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-playercolor17then_0
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
- if (<*) > (<(*+7))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-player19then_0
+player14then_0
 	.byte         %01000010
-	.byte         %00100101
+	.byte         %00100100
+	.byte         %00011000
 	.byte         %00011000
 	.byte         %00011010
-	.byte         %01111100
+	.byte         %00011101
+	.byte         %00010010
 	.byte         %00011000
-	.byte         %00010000
-	.byte         %00011000
- if (<*) > (<(*+8))
+ if (<*) > (<(*+7))
 	repeat ($100-<*)
 	.byte 0
 	repend
 	endif
-playercolor21then_0
-	.byte     
+playercolor16then_0
 	.byte     $34;
 	.byte     $34;
 	.byte     $34;
@@ -3214,42 +3439,13 @@ playercolor21then_0
 	.byte 0
 	repend
 	endif
-player23then_0
-	.byte         %00100101
+player18then_0
 	.byte         %00100100
-	.byte         %00011000
-	.byte         %01011010
-	.byte         %00111100
-	.byte         %00011000
-	.byte         %00010000
-	.byte         %00011000
- if (<*) > (<(*+8))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-playercolor25then_0
-	.byte 
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
- if (<*) > (<(*+7))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-player27then_0
-	.byte         %01000010
-	.byte         %00100101
+	.byte         %00100100
 	.byte         %00011000
 	.byte         %00011010
-	.byte         %01111100
-	.byte         %00011000
+	.byte         %00011101
+	.byte         %00011010
 	.byte         %00010000
 	.byte         %00011000
  if (<*) > (<(*+7))
@@ -3257,7 +3453,7 @@ player27then_0
 	.byte 0
 	repend
 	endif
-playercolor29then_0
+playercolor20then_0
 	.byte     $34;
 	.byte     $34;
 	.byte     $34;
@@ -3271,10 +3467,10 @@ playercolor29then_0
 	.byte 0
 	repend
 	endif
-player31then_0
+player22then_1
 	.byte         %00100100
 	.byte         %00100100
-	.byte         %00011001
+	.byte         %00011000
 	.byte         %00011010
 	.byte         %00111100
 	.byte         %01011000
@@ -3285,50 +3481,21 @@ player31then_0
 	.byte 0
 	repend
 	endif
-playercolor33then_0
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
+playercolor24then_1
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
  if (<*) > (<(*+7))
 	repeat ($100-<*)
 	.byte 0
 	repend
 	endif
-player35then_1
-	.byte         %00100100
-	.byte         %00100100
-	.byte         %00011000
-	.byte         %00011010
-	.byte         %00111100
-	.byte         %01011000
-	.byte         %00010000
-	.byte         %00011000
- if (<*) > (<(*+8))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-playercolor37then_1
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     $34;
-	.byte     
- if (<*) > (<(*+7))
-	repeat ($100-<*)
-	.byte 0
-	repend
-	endif
-player39then_1
+player26then_1
 	.byte         %01000010
 	.byte         %00100100
 	.byte         %00011000
@@ -3342,7 +3509,35 @@ player39then_1
 	.byte 0
 	repend
 	endif
-playercolor41then_1
+playercolor28then_1
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+	.byte     $16;
+ if (<*) > (<(*+7))
+	repeat ($100-<*)
+	.byte 0
+	repend
+	endif
+player30then_1
+	.byte         %01000010
+	.byte         %00100100
+	.byte         %00011000
+	.byte         %00011000
+	.byte         %00011010
+	.byte         %00011101
+	.byte         %00010010
+	.byte         %00011000
+ if (<*) > (<(*+7))
+	repeat ($100-<*)
+	.byte 0
+	repend
+	endif
+playercolor32then_1
 	.byte     $34;
 	.byte     $34;
 	.byte     $34;
@@ -3351,6 +3546,78 @@ playercolor41then_1
 	.byte     $34;
 	.byte     $34;
 	.byte     $34;
+ if (<*) > (<(*+7))
+	repeat ($100-<*)
+	.byte 0
+	repend
+	endif
+player34then_1
+	.byte         %00100100
+	.byte         %00100100
+	.byte         %00011000
+	.byte         %00011010
+	.byte         %00011101
+	.byte         %00011010
+	.byte         %00010000
+	.byte         %00011000
+ if (<*) > (<(*+7))
+	repeat ($100-<*)
+	.byte 0
+	repend
+	endif
+playercolor36then_1
+	.byte     $34;
+	.byte     $34;
+	.byte     $34;
+	.byte     $34;
+	.byte     $34;
+	.byte     $34;
+	.byte     $34;
+	.byte     $34;
+ if (<*) > (<(*+15))
+	repeat ($100-<*)
+	.byte 0
+	repend
+	endif
+playerL0160_0
+	.byte         %11100110
+	.byte         %10101001
+	.byte         %10101001
+	.byte         %10001001
+	.byte         %11100110
+	.byte         %00000000
+	.byte         %00000000
+	.byte         %11111111
+	.byte         %00000000
+	.byte         %00000000
+	.byte         %00000000
+	.byte         %11000110
+	.byte         %00101001
+	.byte         %00101001
+	.byte         %00101001
+	.byte         %11110110
+ if (<*) > (<(*+15))
+	repeat ($100-<*)
+	.byte 0
+	repend
+	endif
+playerL0161_1
+	.byte         %11101100
+	.byte         %01000010
+	.byte         %01001110
+	.byte         %01001000
+	.byte         %11100110
+	.byte         %00000000
+	.byte         %00000000
+	.byte         %11111111
+	.byte         %00000000
+	.byte         %00000000
+	.byte         %00000000
+	.byte         %10100110
+	.byte         %10101001
+	.byte         %11101001
+	.byte         %10101001
+	.byte         %01000110
  if ECHOFIRST
        echo "    ",[(scoretable - *)]d , "bytes of ROM space left")
  endif 
